@@ -70,9 +70,9 @@ export default function Procedure() {
       content:
         "추가 질문이 있을 경우, 실시간 세션을 통해 직접 강사에게 배운다 (Comming Soon)",
     },
-    { label: "라", width: "w-[300px]", bg: "bg-indigo-950" },
-    { label: "시", width: "w-[320px]", bg: "bg-violet-700" },
-    { label: "도", width: "w-[340px]", bg: "bg-red-600" },
+    { label: "라", width: "w-[300px]", bg: "bg-indigo-950", content: "" },
+    { label: "시", width: "w-[320px]", bg: "bg-violet-700", content: "" },
+    { label: "도", width: "w-[340px]", bg: "bg-red-600", content: "" },
   ];
 
   const [selectedContent, setSelectedContent] = useState<string | null>(null);

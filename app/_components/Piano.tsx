@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as Tone from "tone";
 
+// 키보드 키 타입 정의
 interface Key {
   note: string;
   color: "white" | "black";
 }
 
+// 피아노 키 배열
 const keys: Key[] = [
   { note: "C4", color: "white" },
   { note: "C#4", color: "black" },
@@ -33,17 +35,41 @@ const keys: Key[] = [
   { note: "A5", color: "white" },
   { note: "A#5", color: "black" },
   { note: "B5", color: "white" },
+  { note: "C6", color: "white" },
+  { note: "C#6", color: "black" },
+  { note: "D6", color: "white" },
+  { note: "D#6", color: "black" },
+  { note: "E6", color: "white" },
+  { note: "F6", color: "white" },
+  { note: "F#6", color: "black" },
+  { note: "G6", color: "white" },
+  { note: "G#6", color: "black" },
+  { note: "A6", color: "white" },
+  { note: "A#6", color: "black" },
+  { note: "B6", color: "white" },
+  { note: "C7", color: "white" },
 ];
 
-const synth = new Tone.Synth().toDestination();
-
-const PianoKeyboard = () => {
+const PianoKeyboard: React.FC = () => {
+  const [synth, setSynth] = useState<Tone.Synth | null>(null);
   const [activeKey, setActiveKey] = useState<string | null>(null);
 
+  // 클라이언트에서만 Tone.js 객체 생성
+  useEffect(() => {
+    const newSynth = new Tone.Synth().toDestination();
+    setSynth(newSynth);
+
+    return () => {
+      newSynth.dispose(); // 언마운트 시 객체 해제
+    };
+  }, []);
+
   const playNote = (note: string) => {
-    synth.triggerAttackRelease(note, "8n");
-    setActiveKey(note);
-    setTimeout(() => setActiveKey(null), 200);
+    if (synth) {
+      synth.triggerAttackRelease(note, "8n");
+      setActiveKey(note);
+      setTimeout(() => setActiveKey(null), 200);
+    }
   };
 
   return (
